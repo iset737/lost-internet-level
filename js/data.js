@@ -1,132 +1,80 @@
-// =====================
-// BOARDS
-// =====================
 const boards = [
-  {id:"arrivals", name:"Я здесь впервые", desc:"первые провалы"},
-  {id:"routes", name:"Пути и уровни", desc:"маршруты без возврата"},
-  {id:"signals", name:"Сигналы", desc:"отклики из глубины"},
-  {id:"lost", name:"Пропавшие", desc:"последние следы"},
-  {id:"warnings", name:"Предупреждения", desc:"прочитай, если успеешь"},
-  {id:"off", name:"Off-topic", desc:"здесь не должно быть сообщений"}
+  { id: "arrivals", name: "Я здесь впервые" },
+  { id: "routes", name: "Пути и уровни" },
+  { id: "signals", name: "Сигналы" },
+  { id: "lost", name: "Пропавшие" },
+  { id: "warnings", name: "Предупреждения" },
+  { id: "off", name: "Off-topic" }
 ];
 
-// =====================
-// USERS
-// =====================
-const users = {
-  alice:{status:"не зафиксирован", bio:"последний ответ получен слишком поздно"},
-  system:{status:"архив", bio:"автоматическая запись"},
-  unknown:{status:"?", bio:"данные повреждены"},
-  wanderer_17:{status:"оффлайн", bio:"остался дольше, чем планировал"},
-  nullpath:{status:"—", bio:"маршрут не подтверждён"},
-  echo_04:{status:"оффлайн", bio:"отвечает не всегда"}
-};
-
-// =====================
-// КОМБИНАТОРНЫЕ ФРАГМЕНТЫ
-// (10×10×10×10×5 = 5000+)
-// =====================
-const who = [
-  "я","мы","кто-то","один из нас","этот аккаунт",
-  "пользователь","наблюдатель","гость","неизвестный","кто-то здесь"
-];
-
-const action = [
-  "нашёл","увидел","открыл","перешёл","проверил",
-  "потерял","закрыл","обновил","вернулся к","попробовал"
-];
-
-const object = [
-  "старую ссылку","этот форум","переход без названия",
-  "уровень без описания","раздел, которого не было",
-  "сообщение без автора","ответ без вопроса",
-  "тему без даты","путь назад","чужую сессию"
-];
-
-const effect = [
-  "и меня вернуло сюда",
-  "и всё повторилось",
-  "и время сбилось",
-  "и интерфейс изменился",
-  "и ответ пришёл позже",
-  "и выход пропал",
-  "и кто-то ответил",
-  "и я уже был здесь",
-  "и появилось эхо",
-  "и система зависла"
-];
-
-const tail = [
-  "",
-  " снова",
-  " во второй раз",
-  " ночью",
-  " и это было ошибкой"
-];
-
-// =====================
-// ПУГАЮЩИЕ СООБЩЕНИЯ
-// =====================
-const scary = [
-  "ты здесь уже был",
-  "мы тебя видим",
-  "не обновляй страницу сейчас",
-  "это сообщение адресовано тебе",
-  "ты читаешь это слишком долго",
-  "ALICE активна",
-  "соединение не завершено",
-  "форум следит",
-  "ты не гость",
-  "ты не один"
-];
-
-// =====================
-// UTILS
-// =====================
-function rand(arr){ return arr[Math.floor(Math.random()*arr.length)]; }
-function randTime(){
-  return rand(["??:??","ночью","архив","неизвестно","03:17","—"]);
-}
-function randUser(){
-  return rand(Object.keys(users));
-}
-
-// =====================
-// ГЕНЕРАЦИЯ УНИКАЛЬНЫХ ПОСТОВ
-// =====================
-function generateUniquePosts(count){
-  const used = new Set();
-  const posts = [];
-
-  while(posts.length < count){
-    const isScary = Math.random() < 0.04;
-
-    const text = isScary
-      ? rand(scary)
-      : `${rand(who)} ${rand(action)} ${rand(object)} ${rand(effect)}${rand(tail)}`;
-
-    if(used.has(text)) continue;
-    used.add(text);
-
-    posts.push({
-      user: isScary ? "system" : randUser(),
-      time: randTime(),
-      text
-    });
-  }
-  return posts;
-}
-
-// =====================
-// THREADS (2000 УНИКАЛЬНЫХ)
-// =====================
 const threads = {
-  arrivals: generateUniquePosts(350),
-  routes: generateUniquePosts(350),
-  signals: generateUniquePosts(350),
-  lost: generateUniquePosts(320),
-  warnings: generateUniquePosts(320),
-  off: generateUniquePosts(310)
-};
+  arrivals: [
+  { user:"unknown", time:"??:??", text:"я не помню момент, когда перешёл по ссылке" },
+  { user:"unknown", time:"—", text:"адрес изменился уже после загрузки страницы" },
+  { user:"wanderer_17", time:"ночью", text:"я просто искал старый форум, но оказался здесь" },
+  { user:"unknown", time:"архив", text:"это точно не тот сайт, который я открывал" },
+  { user:"unknown", time:"03:14", text:"кнопка назад не работает" },
+  { user:"unknown", time:"—", text:"я закрыл вкладку и снова увидел этот форум" },
+  { user:"unknown", time:"??:??", text:"я не вводил логин, но профиль уже был" },
+  { user:"unknown", time:"ночью", text:"страница открылась сама" },
+  { user:"unknown", time:"—", text:"почему здесь так тихо" },
+  { user:"unknown", time:"архив", text:"форум выглядит давно заброшенным" },
 
-// === ИТОГО: 2000+ УНИКАЛЬНЫХ СООБЩЕНИЙ ===
+  { user:"unknown", time:"??:??", text:"я думал, что это ошибка браузера" },
+  { user:"unknown", time:"—", text:"но адрес снова тот же" },
+  { user:"wanderer_17", time:"архив", text:"раньше здесь отвечали быстрее" },
+  { user:"unknown", time:"ночью", text:"я не уверен, что хотел зайти так глубоко" },
+  { user:"unknown", time:"03:22", text:"страница не закрывается" },
+  { user:"unknown", time:"—", text:"кто-нибудь вообще читает это" },
+  { user:"unknown", time:"??:??", text:"я здесь впервые" },
+  { user:"unknown", time:"—", text:"и надеюсь, что в последний раз" },
+  { user:"unknown", time:"архив", text:"нет приветственного сообщения" },
+  { user:"unknown", time:"ночью", text:"но есть старые следы" },
+
+  { user:"unknown", time:"??:??", text:"ссылка была внутри старого сообщения" },
+  { user:"unknown", time:"—", text:"я не искал этот форум напрямую" },
+  { user:"unknown", time:"03:41", text:"адресная строка дрожала" },
+  { user:"unknown", time:"—", text:"это место ощущается неправильным" },
+  { user:"unknown", time:"архив", text:"дата регистрации пуста" },
+  { user:"unknown", time:"ночью", text:"профиль уже существовал" },
+  { user:"unknown", time:"—", text:"я не помню, чтобы создавал его" },
+  { user:"unknown", time:"??:??", text:"но он здесь" },
+  { user:"unknown", time:"архив", text:"время последнего входа не указано" },
+  { user:"unknown", time:"—", text:"как будто я уже был здесь раньше" },
+
+  { user:"unknown", time:"??:??", text:"я нажал обновить, но ничего не изменилось" },
+  { user:"unknown", time:"—", text:"страница загрузилась слишком быстро" },
+  { user:"wanderer_17", time:"архив", text:"раньше мы предупреждали новичков" },
+  { user:"unknown", time:"ночью", text:"но сейчас никто не отвечает" },
+  { user:"unknown", time:"—", text:"форум не выглядит живым" },
+  { user:"unknown", time:"03:03", text:"но сообщения есть" },
+  { user:"unknown", time:"—", text:"они просто старые" },
+  { user:"unknown", time:"архив", text:"очень старые" },
+  { user:"unknown", time:"??:??", text:"я не понимаю, как сюда выйти" },
+  { user:"unknown", time:"—", text:"кнопка выхода ведёт назад" },
+
+  { user:"unknown", time:"??:??", text:"я думал, что это чей-то розыгрыш" },
+  { user:"unknown", time:"—", text:"но слишком много совпадений" },
+  { user:"unknown", time:"ночью", text:"форум открылся без предупреждения" },
+  { user:"unknown", time:"архив", text:"нет правил" },
+  { user:"unknown", time:"—", text:"нет модераторов" },
+  { user:"unknown", time:"03:17", text:"но есть структура" },
+  { user:"unknown", time:"—", text:"как будто кто-то ожидал гостей" },
+  { user:"unknown", time:"архив", text:"я не уверен, что мы здесь желанные" },
+  { user:"unknown", time:"??:??", text:"я чувствую, что меня заметили" },
+  { user:"unknown", time:"—", text:"и это пугает" },
+
+  { user:"unknown", time:"??:??", text:"я хотел закрыть сайт" },
+  { user:"unknown", time:"—", text:"но решил прочитать ещё" },
+  { user:"unknown", time:"ночью", text:"это было ошибкой" },
+  { user:"unknown", time:"архив", text:"если кто-то это читает" },
+  { user:"unknown", time:"—", text:"ответьте" },
+  { user:"unknown", time:"??:??", text:"я здесь впервые" },
+  { user:"unknown", time:"—", text:"и не знаю, что делать дальше" }
+],
+  routes: [],
+  signals: [],
+  lost: [],
+  warnings: [],
+  off: []
+};
