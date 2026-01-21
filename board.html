@@ -21,7 +21,7 @@ boards.forEach(b=>{
   el.className = "item";
   el.innerHTML = `
     <a href="thread.html?board=${b.id}">${b.name}</a><br>
-    <span class="small">${b.desc}</span>
+    <span class="small">${b.desc ?? "undefined"}</span>
   `;
   container.appendChild(el);
 });
