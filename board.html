@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<title>FORUM BOARDS</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="css/style.css">
+<script src="js/data.js"></script>
+</head>
+<body>
+
+<h1>Форум странников</h1>
+<p class="small">Последняя активность: не зафиксирована</p>
+
+<div id="boards"></div>
+
+<script>
+const container = document.getElementById("boards");
+boards.forEach(b=>{
+  const el = document.createElement("div");
+  el.className = "item";
+  el.innerHTML = `
+    <a href="thread.html?board=${b.id}">${b.name}</a><br>
+    <span class="small">${b.desc}</span>
+  `;
+  container.appendChild(el);
+});
+</script>
+
+</body>
+</html>
