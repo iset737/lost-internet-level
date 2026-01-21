@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<title>THREAD</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="css/style.css">
+<script src="js/data.js"></script>
+</head>
+<body>
+
+<div id="content"></div>
+
+<script>
+const params = new URLSearchParams(location.search);
+const board = params.get("board");
+const list = threads[board] || [];
+const c = document.getElementById("content");
+
+// ночной режим
+const h = new Date().getHours();
+if (h >= 0 && h <= 5) document.body.classList.add("night");
+
+list.forEach(t=>{
+  const d = document.createElement("div");
+  d.className = "post";
+
+  const glitch = Math.random() < 0.25 ? "glitch" : "";
+
+  d.innerHTML = `
+    <div class="meta">
+      <a href="user.html?u=${t.user}">${t.user}</a> • ${t.time}
+    </div>
+    <div class="text ${glitch}" data-text="${t.text}">
+      ${t.text}
+    </div>
+  `;
+
+  c.appendChild(d);
+
+  // редкая пугающая подмена
+  if (Math.random() < 0.04) {
+    setTimeout(() => {
+      d.querySelector(".text").textContent = "ты здесь уже был";
+    }, 2000 + Math.random()*3000);
+  }
+});
+
+// редкое системное сообщение
+if (Math.random() < 0.08) {
+  setTimeout(() => {
+    const g = document.createElement("div");
+    g.className = "post";
+    g.innerHTML = `
+      <div class="meta">system • сейчас</div>
+      <div class="text glitch" data-text="не обновляй страницу">
+        не обновляй страницу
+      </div>`;
+    c.prepend(g);
+  }, 1500);
+}
+</script>
+
+</body>
+</html>
