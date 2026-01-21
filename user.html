@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<title>USER PROFILE</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="css/style.css">
+<script src="js/data.js"></script>
+</head>
+<body>
+
+<div id="profile"></div>
+
+<script>
+const u = new URLSearchParams(location.search).get("u") || "unknown";
+const p = users[u] || users.unknown;
+
+document.getElementById("profile").innerHTML = `
+<h2>${u}</h2>
+<p class="small">Статус: ${p.status}</p>
+<p>${p.bio}</p>
+`;
+</script>
+
+</body>
+</html>
